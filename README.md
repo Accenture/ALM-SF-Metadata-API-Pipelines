@@ -1,44 +1,49 @@
-# Salesforce ALM Framework - Python Scripts for Metadata API
+# Salesforce ALM Framework - CI/CD Pipelines for Metadata API
 
-Python scripts to perform ALM (Application Lifecycle Management) operations over Salesforce platform using metadata API.
+Groovy pipelines for Jenkins to perform ALM (Application Lifecycle Management) operations over Salesforce platform using Metadata API. The DX version of these pipelines can be found in [ALM-SF-DX-Pipelines](https://github.com/Accenture/ALM-SF-DX-Pipelines).
 
-These scripts can be used standalone or invoked from CI/CD pipelines, such as the Jenkins pipelines from [ALM-SF-Metadata-API-Pipelines](https://github.com/Accenture/ALM-SF-Metadata-API-Pipelines).
-
-
-## Call Git Server
-
-Handle Git operations between different Git distributions.
+These pipelines are meant to be used altogether with Python scripts from [LM-SF-Metadata-API-Python-Tools](https://github.com/Accenture/ALM-SF-Metadata-API-Python-Tools).
 
 Currently supporting:
-- Gitlab
+- Gitlab CE
+- Gitlab EE
+- Gitlab.com
 - Bitbucket Cloud 
 - Bitbucket Server
 
-Detailed explanation can be found at [Call Git Server README](/callGitServer/README.md)
+## Git2SF
 
-## Merger
+Automatic pipeline triggered from a Merge/Pull Request creation and/or modification. The job performs a validation/deployment of the differences exisiting between the source and target branches in the configured org. 
 
-Builds a package with the changes between source and target branches or commits.
+Detailed explanation and job configuration can be found at [Git2SF README](/docs/Git2SF_README.md).
 
-Detailed explanation can be found at [Merger README](/merger/README.md)
+## DeployerOpenMR
 
-## Nomenclature
+Handles the manually executed jobs to validate/deploy metadata into Salesforce using as input parameters the Merge/Pull Request Id and the target Salesforce environment.
 
-Validates if metadata files follow custom nomenclature guidelines.
+Detailed explanation and job configuration can be found at [DeployerOpenMR README](/docs/DeployerOpenMR_README.md).
 
-Detailed explanation can be found at [Nomenclature README](/nomenclature/README.md)
+## Deployer
 
-## PMD
+Handles the manually executed jobs to validate/deploy metadata into Salesforce using as input parameters the source and target commit hashes (or tag names) and the target Salesforce environment.
 
-Creates a customizable report from a PMD analysis.
+Detailed explanation and job configuration can be found at [Deployer README](/docs/Deployer_README.md).
 
-Detailed explanation can be found at [PMD README](/pmd/README.md)
+## Pipeline Libraries
 
-## Send Email
+Set of shared libraries wich are used by the pipelines execution.
 
-Sends an email showing the pipeline results and attaches PMD and/or deployment logs.
+Detailed explanation of each library can be found at [Libraries README](/var/README.md).
 
-Detailed explanation can be found at [Send email README](/sendemail/README.md)
+Detailed explanation and job configuration can be found at [Deployer README](/docs/Deployer_README.md).
+
+
+# Contributors Guide
+
+## Contribution
+
+We encourage you to contribute to new features or fixes. You can start by opening a
+[Github issue](https://github.com/Accenture/ALM-SF-DX-Pipelines/issues) to get feedback from other contributors.
 
 ## License
 
