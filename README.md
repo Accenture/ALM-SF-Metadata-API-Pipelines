@@ -31,7 +31,7 @@ Detailed explanation and job configuration can be found at [Deployer README](/do
 
 ## Pipeline Libraries
 
-Set of shared libraries wich are used by the pipelines execution.
+Set of shared libraries which are used by the pipelines execution.
 
 Detailed explanation of each library can be found at [Libraries README](/var/README.md).
 
