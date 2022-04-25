@@ -19,8 +19,7 @@ steps:
 
         # validate package
         sfdx force:mdapi:deploy -u ${SFDX_USERNAME} -d ${SRC_TO_DEPLOY} ${testString} --apiversion ${API_VERSION} --wait 0 -c > validationInfo.log
-        cat validationInfo.log
-        validationId=$(cat validationInfo.log | awk -F":" '/^Job\sID\s|\s/ { print $2 }' | xargs)
+        validationId=$(cat validationInfo.log | awk -F "|" '/^Job\sID/ { print $2 }' | xargs)
 
         echo "${validationId}"
         if [[ -z "${validationId}" ]]; then
