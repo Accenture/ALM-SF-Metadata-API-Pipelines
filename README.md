@@ -2,14 +2,14 @@
 
 Pipelines for Azure to perform ALM (Application Lifecycle Management) operations over Salesforce platform using Metadata API.
 
-These pipelines are meant to be used altogether with Python scripts from [LM-SF-Metadata-API-Python-Tools](https://github.com/Accenture/ALM-SF-Metadata-API-Python-Tools).
+These pipelines are meant to be used altogether with Python scripts from [ALM-SF-Metadata-API-Python-Tools](https://github.com/Accenture/ALM-SF-Metadata-API-Python-Tools).
 
 Currently supporting:
 - Azure DevOps
 - Gitlab CE
 - Gitlab EE
 - Gitlab.com
-- Bitbucket Cloud 
+- Bitbucket Cloud
 - Bitbucket Server
 
 
