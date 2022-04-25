@@ -15,8 +15,8 @@ resources:
 
   - repository: Templates_Salesforce
     type: github
-    name: Accenture/ALM-SF-Metadata-API-Python-Tools
-    ref: refs/heads/$(GIT_BRANCH_REPO_SCRIPTS)
+    name: Accenture/ALM-SF-Metadata-API-Pipelines
+    ref: refs/heads/main-azure
     endpoint: Github-Accenture-ALM
 
   - repository: AP_Salesforce
