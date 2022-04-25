@@ -17,7 +17,7 @@ steps:
           testString="-l RunSpecifiedTests -r $(testToRun)"
         fi
         sfdx force:mdapi:deploy -u ${SFDX_USERNAME} -d ${SRC_TO_DEPLOY} ${testString} --apiversion ${API_VERSION} --wait 0 > deploymentInfo.log
-        deploymentId=$(cat deploymentInfo.log | awk -F":" '/^Job\sID:\s/ { print $2 }' | xargs)
+        deploymentId=$(cat deploymentInfo.log | awk -F":" '/^Job\sID\s|\s/ { print $2 }' | xargs)
 
         echo "${deploymentId}"
         if [[ -z "${deploymentId}" ]]; then
