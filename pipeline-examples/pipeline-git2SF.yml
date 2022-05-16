@@ -19,6 +19,11 @@ resources:
     ref: refs/heads/main-azure
     endpoint: Github-Accenture-ALM
 
+  - repository: Templates_Salesforce_Configuration
+    type: git
+    name: Salesforce/Templates_Salesforce_Configuration
+    ref: refs/heads/main
+
   - repository: AP_Salesforce
     type: git
     name: Salesforce/AP_Salesforce
@@ -26,6 +31,10 @@ resources:
 
 variables:
   - group: 'alm-global-vars'
+  - group: 'alm-sf-credentials'
+
+  - name: pullRequestId
+    value: $[variables['System.PullRequest.PullRequestId']]
   - name: isValidSourceBranch
     value: $[startsWith(variables['System.PullRequest.SourceBranch'], variables.SOURCE_BRANCH)]
 
@@ -36,7 +45,8 @@ stages:
     jobs:
       - job: Validate
         steps:
-        - template: pipeline-templates/pipeline-queue-validate.yml@Templates_Salesforce
+          - template: configCredentials/git2SF.yml@Templates_Salesforce_Configuration
+          - template: pipeline-templates/pipeline-queue-validate.yml@Templates_Salesforce
 
       - job: ValidationPolling
         dependsOn: Validate
@@ -44,8 +54,6 @@ stages:
         variables:
           - name: validationId
             value: $[ dependencies.Validate.outputs['validatePackage.validationId'] ]
-          - name: gitPullRequestId
-            value: $[ dependencies.Validate.outputs['validatePackage.gitPullRequestId'] ]
           - name: owner
             value: $[ dependencies.Validate.outputs['validatePackage.owner'] ]
           - name: repoHost
@@ -55,7 +63,8 @@ stages:
           - name: testToRun
             value: $[ dependencies.Validate.outputs['validatePackage.testToRun'] ]
         steps:
-        - template: pipeline-templates/pipeline-polling-validation.yml@Templates_Salesforce
+          - template: configCredentials/git2SF.yml@Templates_Salesforce_Configuration
+          - template: pipeline-templates/pipeline-polling-validation.yml@Templates_Salesforce
 
   - stage: Deployment
     condition: and( eq( variables.isValidSourceBranch, 'true' ), eq( lower(variables.CHECK_DEPLOY), 'true' ) )
@@ -63,7 +72,8 @@ stages:
     jobs:
       - job: Deploy
         steps:
-        - template: pipeline-templates/pipeline-queue-deploy.yml@Templates_Salesforce
+          - template: configCredentials/git2SF.yml@Templates_Salesforce_Configuration
+          - template: pipeline-templates/pipeline-queue-deploy.yml@Templates_Salesforce
 
       - job: DeploymentPolling
         dependsOn: Deploy
@@ -71,8 +81,6 @@ stages:
         variables:
           - name: deploymentId
             value: $[ dependencies.Deploy.outputs['deployPackage.deploymentId'] ]
-          - name: gitPullRequestId
-            value: $[ dependencies.Deploy.outputs['deployPackage.gitPullRequestId'] ]
           - name: owner
             value: $[ dependencies.Deploy.outputs['deployPackage.owner'] ]
           - name: repoHost
@@ -82,7 +90,8 @@ stages:
           - name: testToRun
             value: $[ dependencies.Deploy.outputs['deployPackage.testToRun'] ]
         steps:
-        - template: pipeline-templates/pipeline-polling-deploy.yml@Templates_Salesforce
+          - template: configCredentials/git2SF.yml@Templates_Salesforce_Configuration
+          - template: pipeline-templates/pipeline-polling-deploy.yml@Templates_Salesforce
 
   - stage: InvalidSourceBranch
     condition: ne( variables.isValidSourceBranch, 'true' )
